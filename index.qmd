@@ -1,0 +1,109 @@
+---
+title: "Teilprojekt 1" 
+subtitle: "Digital Formative Assessment"
+author: "Fabian Burkart, Stefanie Regier & Samuel Merk"
+format: 
+  revealjs:
+    auto-stretch: false
+    controls: true
+    slide-number: false
+    logo: img/PHlogo.svg
+    theme: [dark, css/custom.scss]
+    fullscreen: true
+    pdfexport: true
+    spotlight:
+      size: 60
+      presentingCursor: true
+      spotlightCursor: true
+bibliography: references.bib
+csl: apa.csl
+editor_options: 
+  chunk_output_type: console
+revealjs-plugins:
+  - spotlight
+---
+
+## Disziplinäre Verortung 
+![](img/Topologie.svg){width=60% fig-align="center"}
+
+
+## Forschungsfragen 
+::: {.panel-tabset}
+
+### Vorhaben 1
+
+> »Das erste Forschungsvorhaben geht der Frage nach, wie Lehrkräfte die Ergebnisse formativer Assessmentverfahren interpretieren. Hierzu werden Think-Aloud-Protokolle analysiert, welche die Kognitionen von Lehrkräften bei der Rezeption und Interpretation von Testergebnissen ihrer Schülerinnen und Schüler erfassen.« (Zitat Exposé Burkart)
+
+### Vorhaben 2
+
+> »Hierauf aufbauend hat das zweite, konfirmatorische Forschungsvorhaben zum Ziel, diese Rezeptions- und Interpretationsprozesse zu verbessern. Dazu sollen auf Basis klassischer Befunde der Visual-Perception-Forschung [@franconeri2021] innovative Visualisierungen (Heatmaps, Dashboards, usw.) zur effektiven und informativen Informationsdarstellung erprobt und optimiert werden.« (Zitat Exposé Burkart)
+
+:::
+
+
+## Arbeitsplan
+```{r}
+#| fig-width: 5
+#| fig-height: 2.5
+#| out-width: 100%
+library(tidyverse)
+library(ganttrify)
+data <- 
+  tibble(
+    wp = c(rep("Vorhaben 1", 4), 
+           rep("Vorhaben 2", 7),
+           "Rahmentext"),
+    activity = c("Kodierung", "Datenanalyse", "Verschriftlichung", "Reviewverfahren",
+                 "Konzeptualisierung", "Materialien", "Pilotierung",
+                    "Datenerhebung", " Datenanalyse", " Verschriftlichung", " Reviewverfahren",
+                 NA),
+    start_date = c(01, 03, 5, 08,
+                   8, 9, 13,
+                     16, 18, 23, 27,
+                   30),
+    end_date   = c(03, 05, 07, 14,
+                   12, 15, 16,
+                     18, 23, 26, 33,
+                   36)
+  ) %>% 
+  mutate(wp = factor(wp, levels = c("Vorhaben 1", "Vorhaben 2", "Rahmentext")),
+         activity = factor(activity, 
+                           levels = c("Kodierung", "Datenanalyse", 
+                                      "Verschriftlichung", "Reviewverfahren", 
+                                      "Konzeptualisierung", "Materialien", 
+                                      "Pilotierung", "Datenerhebung", 
+                                      " Datenanalyse", " Verschriftlichung",
+                                      " Reviewverfahren", " Rahmentext"))) %>% 
+  slice(1:12)
+ganttrify(project = data,
+          project_start_date = "2023-03",
+          font_family = "Roboto Condensed",
+          mark_quarters = F,
+          mark_years = T,
+          month_breaks = 3,
+          show_vertical_lines = F,
+          month_number_label = F,
+          hide_wp = F,
+          size_activity = 2.8,
+          size_wp = 4,
+          colour_palette = c("#8cd000", "#8cd000","#8cd000")) +
+  scale_y_discrete(limits = rev(c("Vorhaben 1", "Kodierung", "Datenanalyse", 
+                                      "Verschriftlichung", "Reviewverfahren", 
+                              "Vorhaben 2",
+                                      "Konzeptualisierung", "Materialien", 
+                                      "Pilotierung", "Datenerhebung", 
+                                      " Datenanalyse", " Verschriftlichung",
+                                      " Reviewverfahren", "Rahmentext"))) +
+  ylab("") +
+  theme(plot.margin=grid::unit(c(0,0,0,0), "mm"),
+        panel.background = element_rect(fill = "#111111"),
+        panel.grid.major.y = element_line(color = "#ffffff70"),
+        plot.background = element_rect(fill = "#111111"),
+      axis.text = element_text(color = "#ffffff"))
+```
+
+## Literatur
+
+<style>
+div.callout {border-left-color: #8cd000 !important;
+</style>
